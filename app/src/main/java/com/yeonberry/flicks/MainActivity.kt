@@ -10,6 +10,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.yeonberry.flicks.model.Movie
+import com.yeonberry.flicks.search.MovieCard
 import com.yeonberry.flicks.ui.theme.FlicksTheme
 
 class MainActivity : ComponentActivity() {
@@ -17,12 +19,18 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             FlicksTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    MovieCard(
+                        Movie(
+                            name = "범죄도시4",
+                            releaseDate = "2024.04.24",
+                            posterPath = "",
+                            genreIds = emptyList()
+                        )
+                    )
                 }
             }
         }
