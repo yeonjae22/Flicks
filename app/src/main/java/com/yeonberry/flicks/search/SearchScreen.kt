@@ -18,17 +18,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.yeonberry.flicks.R
 import com.yeonberry.flicks.model.Movie
+import com.yeonberry.flicks.ui.theme.Black
+import com.yeonberry.flicks.ui.theme.Gray
 
 @Composable
 fun SearchScreen(
-    movies: List<Movie>,
-    modifier: Modifier = Modifier
+    movies: List<Movie>
 ) {
     Column {
         SearchBar()
@@ -68,8 +68,8 @@ fun SearchBar(
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun MovieCard(movie: Movie) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
+fun MovieCard(movie: Movie, modifier: Modifier = Modifier) {
+    Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier.fillMaxWidth()) {
         GlideImage(
             model = movie.posterPath,
             contentDescription = stringResource(id = R.string.movie_poster),
@@ -77,15 +77,15 @@ fun MovieCard(movie: Movie) {
         Column {
             Text(
                 text = movie.name,
+                color = Black,
                 style = MaterialTheme.typography.bodyLarge,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(vertical = 24.dp),
+                modifier = Modifier.padding(vertical = 8.dp),
             )
             Text(
                 text = movie.releaseDate,
-                style = MaterialTheme.typography.bodyLarge,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.padding(vertical = 24.dp),
+                color = Gray,
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.padding(vertical = 2.dp),
             )
         }
     }
