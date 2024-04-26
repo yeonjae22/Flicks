@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
@@ -27,16 +26,14 @@ import com.yeonberry.flicks.ui.theme.Black
 import com.yeonberry.flicks.ui.theme.Gray
 
 @Composable
-fun SearchScreen(
-    movies: List<Movie>
-) {
+fun SearchScreen(modifier: Modifier = Modifier) {
     Column {
         SearchBar()
-        LazyColumn(modifier = Modifier.padding(horizontal = 16.dp)) {
-            items(movies) { movie ->
-                MovieCard(movie)
-            }
-        }
+//        LazyColumn(modifier = modifier.padding(horizontal = 16.dp)) {
+//            items(movies) { movie ->
+//                MovieCard(movie)
+//            }
+//        }
     }
 }
 
