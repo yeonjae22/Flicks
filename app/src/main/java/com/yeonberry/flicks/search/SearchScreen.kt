@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
@@ -14,10 +15,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.yeonberry.flicks.R
@@ -26,14 +30,37 @@ import com.yeonberry.flicks.ui.theme.Black
 import com.yeonberry.flicks.ui.theme.Gray
 
 @Composable
-fun SearchScreen(modifier: Modifier = Modifier) {
+fun SearchScreen(
+    modifier: Modifier = Modifier,
+    viewModel: SearchViewModel = viewModel(),
+    onSearchQueryChanged: (String) -> Unit = {}
+) {
+    val searchState by viewModel.searchState.collectAsStateWithLifecycle()
+    val itemList by viewModel.itemList.collectAsStateWithLifecycle()
+
     Column {
         SearchBar()
-//        LazyColumn(modifier = modifier.padding(horizontal = 16.dp)) {
-//            items(movies) { movie ->
-//                MovieCard(movie)
-//            }
-//        }
+        when (searchState) {
+            SearchResultUiState.EmptyQuery -> {
+
+            }
+
+            SearchResultUiState.LoadFailed -> {
+
+            }
+
+            SearchResultUiState.Loading -> {
+
+            }
+
+            is SearchResultUiState.Success -> {
+                LazyColumn(modifier = modifier.padding(horizontal = 16.dp)) {
+                    this.items(itemList) { movie ->
+                        MovieCard(movie)
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -73,7 +100,7 @@ fun MovieCard(movie: Movie, modifier: Modifier = Modifier) {
         )
         Column {
             Text(
-                text = movie.name,
+                text = movie.title,
                 color = Black,
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(vertical = 8.dp),

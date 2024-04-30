@@ -10,5 +10,5 @@ interface SearchService {
         @Query("query") query: String,
         @Query("page") page: Int,
         @Query("language") language: String = "ko"
-    ): List<SearchResponse>
+    ): SearchResponse
 }

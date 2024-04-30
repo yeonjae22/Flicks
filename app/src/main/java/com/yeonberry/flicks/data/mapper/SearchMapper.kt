@@ -4,9 +4,10 @@ import com.yeonberry.flicks.data.model.SearchResponse
 import com.yeonberry.flicks.model.Movie
 
 object SearchMapper {
-    fun List<SearchResponse>.toDomain() = this.map {
+    fun SearchResponse.toDomain() = this.results.map {
         Movie(
-            name = it.name,
+            id = it.id,
+            title = it.title,
             releaseDate = it.releaseDate,
             posterPath = it.posterPath,
             genreIds = it.genreIds

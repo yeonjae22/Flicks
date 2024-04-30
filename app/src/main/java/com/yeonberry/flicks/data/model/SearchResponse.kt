@@ -3,12 +3,21 @@ package com.yeonberry.flicks.data.model
 import com.google.gson.annotations.SerializedName
 
 data class SearchResponse(
-    @SerializedName("documents")
-    val name: String,
-    @SerializedName("documents")
+    @SerializedName("page")
+    val page: String,
+    @SerializedName("results")
+    val results: List<Movie>
+)
+
+data class Movie(
+    @SerializedName("id")
+    val id: String,
+    @SerializedName("original_title")
+    val title: String,
+    @SerializedName("release_date")
     val releaseDate: String,
-    @SerializedName("documents")
+    @SerializedName("poster_path")
     val posterPath: String,
-    @SerializedName("documents")
+    @SerializedName("genre_ids")
     val genreIds: List<String>
 )

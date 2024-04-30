@@ -1,6 +1,6 @@
 package com.yeonberry.flicks.data.repository
 
-import com.yeonberry.flicks.data.ApiResult
+import com.yeonberry.flicks.data.util.ApiResult
 import com.yeonberry.flicks.model.Movie
 import kotlinx.coroutines.flow.Flow
 

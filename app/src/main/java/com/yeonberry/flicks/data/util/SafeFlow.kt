@@ -1,4 +1,4 @@
-package com.yeonberry.flicks.data
+package com.yeonberry.flicks.data.util
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
