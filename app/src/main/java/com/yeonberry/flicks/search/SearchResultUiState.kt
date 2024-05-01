@@ -5,8 +5,6 @@ import com.yeonberry.flicks.model.Movie
 sealed interface SearchResultUiState {
     data object Loading : SearchResultUiState
 
-    data object EmptyQuery : SearchResultUiState
-
     data object LoadFailed : SearchResultUiState
 
     data class Success(

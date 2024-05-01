@@ -16,6 +16,10 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -32,24 +36,23 @@ import com.yeonberry.flicks.ui.theme.Gray
 @Composable
 fun SearchScreen(
     modifier: Modifier = Modifier,
-    viewModel: SearchViewModel = viewModel(),
-    onSearchQueryChanged: (String) -> Unit = {}
+    viewModel: SearchViewModel = viewModel()
 ) {
     val searchState by viewModel.searchState.collectAsStateWithLifecycle()
     val itemList by viewModel.itemList.collectAsStateWithLifecycle()
+    var query by rememberSaveable { mutableStateOf("") }
+    var page by rememberSaveable { mutableIntStateOf(1) }
 
     Column {
-        SearchBar()
+        SearchBar(onValueChange = {
+            viewModel.searchMovies(query, page)
+        })
         when (searchState) {
-            SearchResultUiState.EmptyQuery -> {
+            SearchResultUiState.Loading -> {
 
             }
 
             SearchResultUiState.LoadFailed -> {
-
-            }
-
-            SearchResultUiState.Loading -> {
 
             }
 
@@ -66,11 +69,14 @@ fun SearchScreen(
 
 @Composable
 fun SearchBar(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onValueChange: (String) -> Unit = {},
 ) {
     TextField(
         value = "",
-        onValueChange = {},
+        onValueChange = {
+            onValueChange(it)
+        },
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Search,

@@ -6,7 +6,11 @@ data class SearchResponse(
     @SerializedName("page")
     val page: String,
     @SerializedName("results")
-    val results: List<Movie>
+    val results: List<Movie>,
+    @SerializedName("total_pages")
+    val totalPages: String,
+    @SerializedName("total_results")
+    val totalResults: String
 )
 
 data class Movie(
