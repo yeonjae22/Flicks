@@ -16,7 +16,7 @@ data class SearchResponse(
 data class Movie(
     @SerializedName("id")
     val id: String,
-    @SerializedName("original_title")
+    @SerializedName("title")
     val title: String,
     @SerializedName("release_date")
     val releaseDate: String,

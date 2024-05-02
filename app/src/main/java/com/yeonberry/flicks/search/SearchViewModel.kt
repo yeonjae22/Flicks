@@ -33,6 +33,7 @@ class SearchViewModel @Inject constructor(
                 when (apiResult) {
                     is ApiResult.Success -> {
                         _searchState.value = SearchResultUiState.Success(apiResult.value.movies)
+                        _itemList.value = apiResult.value.movies
                     }
 
                     else -> {

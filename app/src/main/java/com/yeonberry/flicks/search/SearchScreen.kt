@@ -41,12 +41,16 @@ fun SearchScreen(
     val searchState by viewModel.searchState.collectAsStateWithLifecycle()
     val itemList by viewModel.itemList.collectAsStateWithLifecycle()
     var query by rememberSaveable { mutableStateOf("") }
-    var page by rememberSaveable { mutableIntStateOf(1) }
+    val page by rememberSaveable { mutableIntStateOf(1) }
 
     Column {
-        SearchBar(onValueChange = {
-            viewModel.searchMovies(query, page)
-        })
+        SearchBar(
+            query = query,
+            onValueChange = {
+                query = it
+                viewModel.searchMovies(query, page)
+            }
+        )
         when (searchState) {
             SearchResultUiState.Loading -> {
 
@@ -70,10 +74,11 @@ fun SearchScreen(
 @Composable
 fun SearchBar(
     modifier: Modifier = Modifier,
+    query: String,
     onValueChange: (String) -> Unit = {},
 ) {
     TextField(
-        value = "",
+        value = query,
         onValueChange = {
             onValueChange(it)
         },
