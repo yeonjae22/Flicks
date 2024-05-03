@@ -21,7 +21,7 @@ data class Movie(
     @SerializedName("release_date")
     val releaseDate: String,
     @SerializedName("poster_path")
-    val posterPath: String,
+    val posterPath: String?,
     @SerializedName("genre_ids")
     val genreIds: List<String>
 )

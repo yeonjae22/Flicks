@@ -14,7 +14,7 @@ object SearchMapper {
                 id = it.id,
                 title = it.title,
                 releaseDate = it.releaseDate,
-                posterPath = it.posterPath,
+                posterPath = "https://image.tmdb.org/t/p/w300/" + it.posterPath,
                 genreIds = it.genreIds
             )
         }

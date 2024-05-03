@@ -1,5 +1,6 @@
 package com.yeonberry.flicks.search
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yeonberry.flicks.data.util.ApiResult
@@ -34,6 +35,14 @@ class SearchViewModel @Inject constructor(
                     is ApiResult.Success -> {
                         _searchState.value = SearchResultUiState.Success(apiResult.value.movies)
                         _itemList.value = apiResult.value.movies
+                    }
+
+                    is ApiResult.Error -> {
+                        apiResult.message?.let { Log.d("ApiResult.Error", it) }
+                    }
+
+                    is ApiResult.Exception -> {
+                        Log.d("ApiResult.Error", apiResult.exception.toString())
                     }
 
                     else -> {
