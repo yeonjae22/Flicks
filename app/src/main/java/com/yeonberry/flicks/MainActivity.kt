@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.yeonberry.flicks.search.SearchScreen
+import com.yeonberry.flicks.feature.search.SearchScreen
 import com.yeonberry.flicks.ui.theme.FlicksTheme
 import dagger.hilt.android.AndroidEntryPoint
 

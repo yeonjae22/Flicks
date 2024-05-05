@@ -23,3 +23,7 @@ rootProject.name = "Flicks"
 include(":app")
 include(":core:data")
 include(":feature:search")
+include(":core:domain")
+include(":core:network")
+include(":core:model")
+include(":core:common")
