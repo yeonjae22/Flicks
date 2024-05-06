@@ -1,4 +1,4 @@
-package com.yeonberry.common.ui.theme
+package com.yeonberry.flicks.core.designsystem.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

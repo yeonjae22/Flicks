@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.yeonberry.common"
+    namespace = "com.yeonberry.flicks.core.designsystem"
     compileSdk = 34
 
     compileOptions {
@@ -24,7 +24,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
 }

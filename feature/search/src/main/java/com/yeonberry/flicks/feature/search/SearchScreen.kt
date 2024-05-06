@@ -34,8 +34,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.integration.compose.placeholder
-import com.yeonberry.common.ui.theme.Black
-import com.yeonberry.common.ui.theme.Gray
+import com.yeonberry.flicks.core.designsystem.ui.theme.Black
+import com.yeonberry.flicks.core.designsystem.ui.theme.Gray
 import com.yeonberry.flicks.core.model.Movie
 
 @Composable
