@@ -7,9 +7,9 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetSearchMoviesUseCase @Inject constructor(
-    private val searchMovies: SearchRepository
+    private val repository: SearchRepository
 ) {
 
     operator fun invoke(query: String, page: Int): Flow<ApiResult<SearchResult>> =
-        searchMovies.searchMovies(query, page)
+        repository.searchMovies(query, page)
 }

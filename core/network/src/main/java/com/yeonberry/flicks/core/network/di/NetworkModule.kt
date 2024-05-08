@@ -1,5 +1,6 @@
 package com.yeonberry.flicks.core.network.di
 
+import com.yeonberry.flicks.core.network.api.HomeService
 import com.yeonberry.flicks.core.network.api.SearchService
 import dagger.Module
 import dagger.Provides
@@ -53,5 +54,11 @@ internal object NetworkModule {
     @Singleton
     fun provideSearchService(retrofit: Retrofit): SearchService {
         return retrofit.create(SearchService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideHomeService(retrofit: Retrofit): HomeService {
+        return retrofit.create(HomeService::class.java)
     }
 }
