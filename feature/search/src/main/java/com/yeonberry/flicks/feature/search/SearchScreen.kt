@@ -3,9 +3,12 @@ package com.yeonberry.flicks.feature.search
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
@@ -13,7 +16,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Search
@@ -48,21 +50,21 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import coil.size.Size
 import com.yeonberry.flicks.core.designsystem.ui.theme.Black
 import com.yeonberry.flicks.core.designsystem.ui.theme.Gray
+import com.yeonberry.flicks.core.designsystem.ui.theme.Red
 import com.yeonberry.flicks.core.model.Movie
 
 @Composable
 fun SearchScreen(
-    modifier: Modifier = Modifier,
-    viewModel: SearchViewModel = viewModel()
+    modifier: Modifier = Modifier, viewModel: SearchViewModel = viewModel()
 ) {
     val searchState by viewModel.searchState.collectAsStateWithLifecycle()
     val itemList by viewModel.itemList.collectAsStateWithLifecycle()
@@ -70,19 +72,14 @@ fun SearchScreen(
     val page by rememberSaveable { mutableIntStateOf(1) }
 
     Column {
-        SearchToolbar(
-            searchQuery = query,
-            onSearchQueryChanged = {
-                query = it
-                viewModel.searchMovies(query, page)
-            },
-            onSearchTriggered = {
+        SearchToolbar(searchQuery = query, onSearchQueryChanged = {
+            query = it
+            viewModel.searchMovies(query, page)
+        }, onSearchTriggered = {
 
-            },
-            onBackClick = {
+        }, onBackClick = {
 
-            }
-        )
+        })
         when (searchState) {
             SearchResultUiState.Loading -> {
 
@@ -93,7 +90,7 @@ fun SearchScreen(
             }
 
             is SearchResultUiState.Success -> {
-                LazyColumn(modifier = modifier.padding(horizontal = 16.dp)) {
+                LazyColumn {
                     this.items(itemList) { movie ->
                         MovieCard(movie)
                     }
@@ -205,40 +202,13 @@ private fun SearchTextField(
         ),
         maxLines = 1,
         singleLine = true,
+        placeholder = {
+            Text(stringResource(R.string.feature_search_placeholder))
+        }
     )
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
     }
-}
-
-@Composable
-fun SearchBar(
-    modifier: Modifier = Modifier,
-    query: String,
-    onValueChange: (String) -> Unit = {},
-) {
-    TextField(
-        value = query,
-        onValueChange = {
-            onValueChange(it)
-        },
-        leadingIcon = {
-            Icon(
-                imageVector = Icons.Default.Search,
-                contentDescription = null
-            )
-        },
-        colors = TextFieldDefaults.colors(
-            unfocusedContainerColor = MaterialTheme.colorScheme.surface,
-            focusedContainerColor = MaterialTheme.colorScheme.surface
-        ),
-        placeholder = {
-            Text(stringResource(R.string.feature_search_placeholder))
-        },
-        modifier = modifier
-            .fillMaxWidth()
-            .heightIn(min = 56.dp)
-    )
 }
 
 @Composable
@@ -249,19 +219,24 @@ fun MovieCard(movie: Movie, modifier: Modifier = Modifier) {
     var isLoading by remember { mutableStateOf(true) }
     var isError by remember { mutableStateOf(false) }
     val imageLoader = rememberAsyncImagePainter(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(movie.posterPath)
-            .size(Size.ORIGINAL)
+        model = ImageRequest.Builder(LocalContext.current).data(movie.posterPath).crossfade(true)
             .build(),
         onState = { state ->
             isLoading = state is AsyncImagePainter.State.Loading
             isError = state is AsyncImagePainter.State.Error
-        },
-    )
+        })
 
-    Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier.fillMaxWidth()) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 4.dp)
+    ) {
+        val height = 489.pxToDp()
         Image(
             modifier = Modifier
+                .width(342.pxToDp())
+                .height(height)
                 .clip(RoundedCornerShape(corner = CornerSize(2.dp))),
             contentScale = ContentScale.Crop,
             painter = if (isError.not()) {
@@ -271,18 +246,53 @@ fun MovieCard(movie: Movie, modifier: Modifier = Modifier) {
             },
             contentDescription = null,
         )
-        Column {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(height)
+        ) {
             Text(
                 text = movie.title,
                 color = Black,
                 style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(vertical = 8.dp),
+                modifier = Modifier.padding(start = 8.dp),
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
             )
+            Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = movie.releaseDate,
                 color = Gray,
                 style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.padding(vertical = 2.dp),
+                modifier = Modifier.padding(start = 8.dp),
+                maxLines = 1
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    modifier = Modifier
+                        .padding(start = 8.dp)
+                        .size(16.dp),
+                    painter = painterResource(id = R.drawable.baseline_star_24),
+                    contentDescription = null,
+                    tint = Red,
+                )
+                Text(
+                    text = movie.voteAverage,
+                    color = Black,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.padding(start = 2.dp),
+                    maxLines = 1
+                )
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = movie.overview,
+                color = Black,
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(start = 8.dp),
+                maxLines = 3,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }
