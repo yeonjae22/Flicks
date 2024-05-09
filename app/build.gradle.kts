@@ -78,8 +78,6 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.logging.interceptor)
 
-    implementation(libs.compose)
-
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
 

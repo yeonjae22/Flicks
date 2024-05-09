@@ -50,10 +50,10 @@ dependencies {
 
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
-    implementation(libs.compose)
-
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
 
     implementation(libs.kotlinx.coroutines.android)
+
+    implementation(libs.coil.compose)
 }

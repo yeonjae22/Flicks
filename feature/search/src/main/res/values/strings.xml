@@ -2,4 +2,7 @@
 <resources>
     <string name="feature_search_movie_poster">Movie Poster</string>
     <string name="feature_search_placeholder">영화 제목을 입력하세요.</string>
+    <string name="feature_search_title">Search</string>
+    <string name="feature_search_clear_search_text_desc">Clear search text</string>
+    <string name="back_desc">Back</string>
 </resources>
