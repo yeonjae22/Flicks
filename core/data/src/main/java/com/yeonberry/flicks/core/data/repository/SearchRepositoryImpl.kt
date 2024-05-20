@@ -3,7 +3,7 @@ package com.yeonberry.flicks.core.data.repository
 import com.yeonberry.common.result.ApiResult
 import com.yeonberry.common.result.safeFlow
 import com.yeonberry.flicks.core.data.mapper.SearchMapper.toDomain
-import com.yeonberry.flicks.core.data.source.SearchDataSource
+import com.yeonberry.flicks.core.network.source.SearchDataSource
 import com.yeonberry.flicks.core.model.SearchResult
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

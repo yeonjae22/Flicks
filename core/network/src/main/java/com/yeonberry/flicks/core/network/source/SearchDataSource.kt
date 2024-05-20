@@ -1,4 +1,4 @@
-package com.yeonberry.flicks.core.data.source
+package com.yeonberry.flicks.core.network.source
 
 import com.yeonberry.flicks.core.network.api.SearchService
 import javax.inject.Inject
