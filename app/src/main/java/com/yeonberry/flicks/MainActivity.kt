@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.yeonberry.flicks.feature.search.SearchScreen
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.yeonberry.flicks.navigation.FlicksNavHost
 import com.yeonberry.flicks.ui.theme.FlicksTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,7 +23,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    SearchScreen()
+                    FlicksNavHost()
                 }
             }
         }

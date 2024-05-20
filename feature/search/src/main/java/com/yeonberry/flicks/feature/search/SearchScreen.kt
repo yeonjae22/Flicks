@@ -52,6 +52,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImagePainter
@@ -64,7 +65,9 @@ import com.yeonberry.flicks.core.model.Movie
 
 @Composable
 fun SearchScreen(
-    modifier: Modifier = Modifier, viewModel: SearchViewModel = viewModel()
+    modifier: Modifier = Modifier,
+    viewModel: SearchViewModel = hiltViewModel(),
+    onBackClick: () -> Unit
 ) {
     val searchState by viewModel.searchState.collectAsStateWithLifecycle()
     val itemList by viewModel.itemList.collectAsStateWithLifecycle()
@@ -77,9 +80,8 @@ fun SearchScreen(
             viewModel.searchMovies(query, page)
         }, onSearchTriggered = {
 
-        }, onBackClick = {
-
-        })
+        }, onBackClick = onBackClick
+        )
         when (searchState) {
             SearchResultUiState.Loading -> {
 

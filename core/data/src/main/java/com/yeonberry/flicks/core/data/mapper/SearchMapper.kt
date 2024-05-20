@@ -5,7 +5,7 @@ import com.yeonberry.flicks.core.model.SearchResult
 import com.yeonberry.flicks.core.network.model.SearchResponse
 
 object SearchMapper {
-    fun SearchResponse.toDomain() = SearchResult(
+    fun SearchResponse.asExternalModel() = SearchResult(
         page = page,
         totalPages = totalPages,
         totalResults = totalResults,

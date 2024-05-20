@@ -11,20 +11,23 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.yeonberry.flicks.core.model.Movie
 
+
+
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = viewModel()
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
     val homeState by viewModel.homeState.collectAsStateWithLifecycle()
-    val itemList by viewModel.itemList.collectAsStateWithLifecycle()
+    // val itemList by viewModel.itemList.collectAsStateWithLifecycle()
 
     Column {
-        when (homeState) {
+        when (val state = homeState) {
             HomeResultUiState.Loading -> {
 
             }
@@ -34,7 +37,7 @@ fun HomeScreen(
             }
 
             is HomeResultUiState.Success -> {
-                TrendingMoviesSection(movies = itemList)
+                TrendingMoviesSection(movies = state.movies)
             }
         }
     }

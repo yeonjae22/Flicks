@@ -7,4 +7,6 @@ class HomeDataSource @Inject constructor(
     private val service: HomeService
 ) {
     suspend fun getTrendingMovies() = service.getTrendingMovies()
+    suspend fun getNowPlayingMovies() = service.getNowPlayingMovies()
+    suspend fun getPopularMovies() = service.getPopularMovies()
 }

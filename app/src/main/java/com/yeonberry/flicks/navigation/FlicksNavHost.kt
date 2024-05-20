@@ -4,12 +4,13 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.yeonberry.flicks.feature.home.HomeScreen
 import com.yeonberry.flicks.feature.search.SearchScreen
 
 @Composable
 fun FlicksNavHost(
-    navController: NavHostController,
+    navController: NavHostController = rememberNavController(),
     startDestination: String = "home_route"
 ) {
 
@@ -21,7 +22,9 @@ fun FlicksNavHost(
             HomeScreen()
         }
         composable("search_route") {
-            SearchScreen()
+            SearchScreen(
+                onBackClick = navController::popBackStack
+            )
         }
     }
 }
