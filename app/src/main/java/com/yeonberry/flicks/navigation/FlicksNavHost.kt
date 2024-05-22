@@ -11,7 +11,7 @@ import com.yeonberry.flicks.feature.search.SearchScreen
 @Composable
 fun FlicksNavHost(
     navController: NavHostController = rememberNavController(),
-    startDestination: String = "home_route"
+    startDestination: String = "search_route"
 ) {
 
     NavHost(

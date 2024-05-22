@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,7 +29,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import com.yeonberry.flicks.core.designsystem.ui.theme.Black
+import com.yeonberry.flicks.core.designsystem.ui.theme.Gray400
 import com.yeonberry.flicks.core.model.Movie
 
 
@@ -40,7 +39,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val homeState by viewModel.homeState.collectAsStateWithLifecycle()
-    // val itemList by viewModel.itemList.collectAsStateWithLifecycle()
+    val itemList by viewModel.itemList.collectAsStateWithLifecycle()
 
     Column {
         when (val state = homeState) {
@@ -79,31 +78,31 @@ private fun TrendingMoviesSection(
 }
 
 @Composable
-fun Int.pxToDp() = with(LocalDensity.current) { this@pxToDp.toDp() }
-
-@Composable
 fun MovieCard(movie: Movie, modifier: Modifier = Modifier) {
     var isLoading by remember { mutableStateOf(true) }
     var isError by remember { mutableStateOf(false) }
+
     val imageLoader = rememberAsyncImagePainter(
-        model = ImageRequest.Builder(LocalContext.current).data(movie.posterPath).crossfade(true)
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(movie.posterPath)
+            .crossfade(true)
             .build(),
         onState = { state ->
             isLoading = state is AsyncImagePainter.State.Loading
             isError = state is AsyncImagePainter.State.Error
         })
-    val height = 489.pxToDp()
+
     Column {
         Image(
             modifier = Modifier
-                .width(342.pxToDp())
-                .height(height)
+                .width(130.dp)
+                .height(186.dp)
                 .clip(RoundedCornerShape(corner = CornerSize(2.dp))),
             contentScale = ContentScale.Crop,
             painter = if (isError.not()) {
                 imageLoader
             } else {
-                painterResource(id = Black.hashCode())
+                painterResource(Gray400.hashCode())
             },
             contentDescription = null,
         )
@@ -127,16 +126,6 @@ fun MovieCard(movie: Movie, modifier: Modifier = Modifier) {
 
 @Preview
 @Composable
-fun MovieCardPreview() {
-    MovieCard(
-        movie = Movie(
-            id = "1234",
-            title = "이연재이연재",
-            releaseDate = "2024.09.08",
-            posterPath = "",
-            genreIds = emptyList(),
-            overview = "이연재이연재이연재이연재이연쟁앵",
-            voteAverage = "9.8"
-        )
-    )
+fun TrendingMoviesSectionPreview() {
+    // TrendingMoviesSection()
 }
