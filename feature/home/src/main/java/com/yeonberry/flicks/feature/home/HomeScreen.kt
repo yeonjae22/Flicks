@@ -50,7 +50,9 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val homeState by viewModel.homeState.collectAsStateWithLifecycle()
-    val itemList by viewModel.itemList.collectAsStateWithLifecycle()
+    val itemList by viewModel.trendingMovie.collectAsStateWithLifecycle()
+
+    viewModel.getHomeContents()
 
     Column {
         when (val state = homeState) {
@@ -137,7 +139,6 @@ fun MovieCard(movie: Movie, modifier: Modifier = Modifier) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Icon(
                 modifier = Modifier
-                    .padding(start = 8.dp)
                     .size(16.dp),
                 painter = painterResource(id = drawable.baseline_star_24),
                 contentDescription = null,

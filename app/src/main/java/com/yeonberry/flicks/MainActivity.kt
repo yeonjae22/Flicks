@@ -6,8 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -40,12 +38,7 @@ class MainActivity : ComponentActivity() {
                             val currentDestination = navBackStackEntry?.destination
                             items.forEach { screen ->
                                 BottomNavigationItem(
-                                    icon = {
-                                        Icon(
-                                            Icons.Filled.Favorite,
-                                            contentDescription = null
-                                        )
-                                    },
+                                    icon = { Icon(screen.icon, contentDescription = null) },
                                     label = { Text(stringResource(screen.resourceId)) },
                                     selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
                                     onClick = {
@@ -67,13 +60,6 @@ class MainActivity : ComponentActivity() {
                         navController = navController
                     )
                 }
-
-//                Surface(
-//                    modifier = Modifier.fillMaxSize(),
-//                    color = MaterialTheme.colorScheme.background
-//                ) {
-//                    FlicksNavHost()
-//                }
             }
         }
     }
