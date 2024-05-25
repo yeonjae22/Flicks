@@ -41,6 +41,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.yeonberry.flicks.core.designsystem.R.drawable
 import com.yeonberry.flicks.core.designsystem.ui.theme.Gray400
 import com.yeonberry.flicks.core.designsystem.ui.theme.Gray900
 import com.yeonberry.flicks.core.designsystem.ui.theme.Red500
@@ -166,7 +167,7 @@ private fun MovieCard(movie: Movie, modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .padding(start = 8.dp)
                         .size(16.dp),
-                    painter = painterResource(id = R.drawable.baseline_star_24),
+                    painter = painterResource(id = drawable.baseline_star_24),
                     contentDescription = null,
                     tint = Red500,
                 )

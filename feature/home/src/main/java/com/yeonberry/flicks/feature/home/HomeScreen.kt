@@ -1,14 +1,20 @@
 package com.yeonberry.flicks.feature.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,6 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -29,7 +36,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.yeonberry.flicks.core.designsystem.R.drawable
 import com.yeonberry.flicks.core.designsystem.ui.theme.Gray400
+import com.yeonberry.flicks.core.designsystem.ui.theme.Gray900
+import com.yeonberry.flicks.core.designsystem.ui.theme.Red500
+import com.yeonberry.flicks.core.designsystem.ui.theme.White
 import com.yeonberry.flicks.core.model.Movie
 
 
@@ -63,11 +74,16 @@ private fun TrendingMoviesSection(
     modifier: Modifier = Modifier,
     movies: List<Movie>
 ) {
-    Column {
+    Column(
+        modifier = modifier
+            .background(White)
+            .fillMaxWidth()
+    ) {
         Text(
             modifier = Modifier.padding(16.dp),
             text = stringResource(id = R.string.feature_home_popular_section_title),
-            style = MaterialTheme.typography.titleLarge
+            color = Gray900,
+            style = MaterialTheme.typography.bodyLarge
         )
         LazyRow(modifier = modifier.padding(horizontal = 16.dp)) {
             this.items(movies) { movie ->
@@ -107,25 +123,51 @@ fun MovieCard(movie: Movie, modifier: Modifier = Modifier) {
             contentDescription = null,
         )
         Text(
-            modifier = Modifier.padding(16.dp),
-            text = movie.voteAverage,
-            style = MaterialTheme.typography.bodyMedium
-        )
-        Text(
-            modifier = Modifier.padding(16.dp),
             text = movie.title,
+            color = Gray900,
             style = MaterialTheme.typography.bodyMedium
         )
+        Spacer(modifier = Modifier.height(2.dp))
         Text(
-            modifier = Modifier.padding(16.dp),
             text = movie.releaseDate,
+            color = Gray400,
             style = MaterialTheme.typography.bodySmall
         )
+        Spacer(modifier = Modifier.height(2.dp))
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(
+                modifier = Modifier
+                    .padding(start = 8.dp)
+                    .size(16.dp),
+                painter = painterResource(id = drawable.baseline_star_24),
+                contentDescription = null,
+                tint = Red500,
+            )
+            Text(
+                text = movie.voteAverage,
+                color = Gray900,
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier.padding(start = 2.dp),
+                maxLines = 1
+            )
+        }
     }
 }
 
 @Preview
 @Composable
 fun TrendingMoviesSectionPreview() {
-    // TrendingMoviesSection()
+    TrendingMoviesSection(
+        movies = listOf(
+            Movie(
+                id = "1234",
+                title = "movie title",
+                releaseDate = "2024.09.08",
+                posterPath = "",
+                genreIds = emptyList(),
+                overview = "movie overview movie overview movie overview movie overview movie overview",
+                voteAverage = "9.8"
+            )
+        )
+    )
 }
