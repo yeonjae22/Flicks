@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="feature_home_popular_section_title">오늘 인기 영화</string>
+    <string name="feature_home_trending_section_title">오늘 트렌드 영화</string>
+    <string name="feature_home_nowPlaying_section_title">현재 상영 중인 영화</string>
+    <string name="feature_home_popular_section_title">인기 있는 영화</string>
 </resources>

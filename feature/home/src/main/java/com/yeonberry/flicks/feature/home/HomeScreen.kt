@@ -67,13 +67,22 @@ fun HomeScreen(
         is HomeResultUiState.Success -> {
             LazyColumn(modifier = modifier.fillMaxSize()) {
                 item {
-                    MoviesSection(movies = trendingMovies)
+                    MoviesSection(
+                        title = stringResource(id = R.string.feature_home_trending_section_title),
+                        movies = trendingMovies
+                    )
                 }
                 item {
-                    MoviesSection(movies = nowPlayingMovies)
+                    MoviesSection(
+                        title = stringResource(id = R.string.feature_home_nowPlaying_section_title),
+                        movies = nowPlayingMovies
+                    )
                 }
                 item {
-                    MoviesSection(movies = popularMovies)
+                    MoviesSection(
+                        title = stringResource(id = R.string.feature_home_popular_section_title),
+                        movies = popularMovies
+                    )
                 }
             }
         }
@@ -83,6 +92,7 @@ fun HomeScreen(
 @Composable
 private fun MoviesSection(
     modifier: Modifier = Modifier,
+    title: String,
     movies: List<Movie>
 ) {
     Column(
@@ -92,7 +102,7 @@ private fun MoviesSection(
     ) {
         Text(
             modifier = Modifier.padding(16.dp),
-            text = stringResource(id = R.string.feature_home_popular_section_title),
+            text = title,
             color = Gray900,
             style = MaterialTheme.typography.bodyLarge
         )
@@ -159,6 +169,7 @@ private fun MovieCard(movie: Movie, modifier: Modifier = Modifier) {
 @Composable
 fun MoviesSectionPreview() {
     MoviesSection(
+        title = stringResource(id = R.string.feature_home_trending_section_title),
         movies = listOf(
             Movie(
                 id = "1234",
