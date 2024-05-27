@@ -11,5 +11,5 @@ import com.yeonberry.flicks.R
 sealed class Screen(val route: String, @StringRes val resourceId: Int, val icon: ImageVector) {
     data object Home : Screen("home", R.string.home, Icons.Filled.Home)
     data object Search : Screen("search", R.string.search, Icons.Filled.Search)
-    data object Favorites : Screen("search", R.string.favorites, Icons.Filled.Favorite)
+    data object Favorites : Screen("favorites", R.string.favorites, Icons.Filled.Favorite)
 }

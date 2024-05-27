@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.yeonberry.flicks.feature.home.HomeScreen
 import com.yeonberry.flicks.feature.search.SearchScreen
+import com.yeonberry.kakao.feature.favorites.FavoritesScreen
 
 @Composable
 fun FlicksNavHost(
@@ -24,6 +25,9 @@ fun FlicksNavHost(
         }
         composable(Screen.Search.route) {
             SearchScreen(modifier = modifier)
+        }
+        composable(Screen.Favorites.route) {
+            FavoritesScreen(modifier = modifier)
         }
     }
 }
