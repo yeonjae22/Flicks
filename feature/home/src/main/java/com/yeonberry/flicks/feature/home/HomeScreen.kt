@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
@@ -50,7 +51,9 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val homeState by viewModel.homeState.collectAsStateWithLifecycle()
-    val itemList by viewModel.trendingMovie.collectAsStateWithLifecycle()
+    val trendingMovies by viewModel.trendingMovies.collectAsStateWithLifecycle()
+    val nowPlayingMovies by viewModel.nowPlayingMovies.collectAsStateWithLifecycle()
+    val popularMovies by viewModel.popularMovies.collectAsStateWithLifecycle()
 
     viewModel.getHomeContents()
 
@@ -65,7 +68,17 @@ fun HomeScreen(
             }
 
             is HomeResultUiState.Success -> {
-                TrendingMoviesSection(movies = state.movies)
+                LazyColumn {
+                    item {
+                        TrendingMoviesSection(movies = trendingMovies)
+                    }
+                    item {
+                        TrendingMoviesSection(movies = nowPlayingMovies)
+                    }
+                    item {
+                        TrendingMoviesSection(movies = popularMovies)
+                    }
+                }
             }
         }
     }

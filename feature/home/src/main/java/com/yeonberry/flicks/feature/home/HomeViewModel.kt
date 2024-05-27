@@ -28,9 +28,17 @@ class HomeViewModel @Inject constructor(
     val homeState: StateFlow<HomeResultUiState>
         get() = _homeState.asStateFlow()
 
-    private val _trendingMovie: MutableStateFlow<List<Movie>> = MutableStateFlow(emptyList())
-    val trendingMovie: StateFlow<List<Movie>>
-        get() = _trendingMovie.asStateFlow()
+    private val _trendingMovies: MutableStateFlow<List<Movie>> = MutableStateFlow(emptyList())
+    val trendingMovies: StateFlow<List<Movie>>
+        get() = _trendingMovies.asStateFlow()
+
+    private val _nowPlayingMovies: MutableStateFlow<List<Movie>> = MutableStateFlow(emptyList())
+    val nowPlayingMovies: StateFlow<List<Movie>>
+        get() = _nowPlayingMovies.asStateFlow()
+
+    private val _popularMovies: MutableStateFlow<List<Movie>> = MutableStateFlow(emptyList())
+    val popularMovies: StateFlow<List<Movie>>
+        get() = _popularMovies.asStateFlow()
 
     fun getHomeContents() {
         viewModelScope.launch {
@@ -43,14 +51,30 @@ class HomeViewModel @Inject constructor(
             }.collectLatest { (trending, nowPlaying, popular) ->
                 when (trending) {
                     is ApiResult.Success -> {
-                        _homeState.value = HomeResultUiState.Success(trending.value.results)
-                        _trendingMovie.value = trending.value.results
+                        _trendingMovies.value = trending.value.results
                     }
 
-                    else -> {
-                        _homeState.value = HomeResultUiState.LoadFailed
-                    }
+                    else -> {}
                 }
+
+                when (nowPlaying) {
+                    is ApiResult.Success -> {
+                        _nowPlayingMovies.value = nowPlaying.value.results
+                    }
+
+                    else -> {}
+                }
+
+                when (popular) {
+                    is ApiResult.Success -> {
+                        _popularMovies.value = popular.value.results
+                    }
+
+                    else -> {}
+                }
+
+
+                _homeState.value = HomeResultUiState.Success
             }
         }
     }
