@@ -15,10 +15,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -52,19 +49,22 @@ import com.yeonberry.flicks.core.model.Movie
 @Composable
 fun SearchScreen(
     modifier: Modifier = Modifier,
-    viewModel: SearchViewModel = hiltViewModel(),
-    onBackClick: () -> Unit
+    viewModel: SearchViewModel = hiltViewModel()
 ) {
     val searchState by viewModel.searchState.collectAsStateWithLifecycle()
     val itemList by viewModel.itemList.collectAsStateWithLifecycle()
+
     var query by rememberSaveable { mutableStateOf("") }
     val page by rememberSaveable { mutableIntStateOf(1) }
 
     Column(modifier = modifier.fillMaxSize()) {
-        SearchToolbar(searchQuery = query, onSearchQueryChanged = {
-            query = it
-            viewModel.searchMovies(query, page)
-        }, onSearchTriggered = {}, onBackClick = onBackClick
+        SearchTextField(
+            onSearchQueryChanged = {
+                query = it
+                viewModel.searchMovies(query, page)
+            },
+            onSearchTriggered = {},
+            searchQuery = query,
         )
         when (searchState) {
             SearchResultUiState.Loading -> {
@@ -83,34 +83,6 @@ fun SearchScreen(
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun SearchToolbar(
-    searchQuery: String,
-    onSearchQueryChanged: (String) -> Unit,
-    onSearchTriggered: (String) -> Unit,
-    onBackClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-            .fillMaxWidth()
-            .background(White),
-    ) {
-        IconButton(onClick = { onBackClick() }) {
-            Icon(
-                imageVector = Icons.Rounded.ArrowBack,
-                contentDescription = null,
-            )
-        }
-        SearchTextField(
-            onSearchQueryChanged = onSearchQueryChanged,
-            onSearchTriggered = onSearchTriggered,
-            searchQuery = searchQuery,
-        )
     }
 }
 
@@ -194,15 +166,6 @@ private fun MovieCard(movie: Movie, modifier: Modifier = Modifier) {
             )
         }
     }
-}
-
-@Preview
-@Composable
-fun SearchToolbarPreview() {
-    SearchToolbar(searchQuery = "",
-        onSearchQueryChanged = {},
-        onSearchTriggered = {},
-        onBackClick = {})
 }
 
 @Preview
