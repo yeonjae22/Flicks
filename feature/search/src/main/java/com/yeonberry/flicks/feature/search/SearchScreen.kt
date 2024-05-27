@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -50,14 +51,16 @@ import com.yeonberry.flicks.core.model.Movie
 
 @Composable
 fun SearchScreen(
-    viewModel: SearchViewModel = hiltViewModel(), onBackClick: () -> Unit
+    modifier: Modifier = Modifier,
+    viewModel: SearchViewModel = hiltViewModel(),
+    onBackClick: () -> Unit
 ) {
     val searchState by viewModel.searchState.collectAsStateWithLifecycle()
     val itemList by viewModel.itemList.collectAsStateWithLifecycle()
     var query by rememberSaveable { mutableStateOf("") }
     val page by rememberSaveable { mutableIntStateOf(1) }
 
-    Column {
+    Column(modifier = modifier.fillMaxSize()) {
         SearchToolbar(searchQuery = query, onSearchQueryChanged = {
             query = it
             viewModel.searchMovies(query, page)
