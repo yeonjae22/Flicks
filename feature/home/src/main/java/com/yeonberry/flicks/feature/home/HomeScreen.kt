@@ -64,7 +64,7 @@ fun HomeScreen(
 
         }
 
-        is HomeResultUiState.Success -> {
+        HomeResultUiState.Success -> {
             LazyColumn(modifier = modifier.fillMaxSize()) {
                 item {
                     MoviesSection(
@@ -110,7 +110,7 @@ private fun MoviesSection(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             contentPadding = PaddingValues(start = 16.dp, end = 16.dp)
         ) {
-            this.items(movies) { movie ->
+            items(movies) { movie ->
                 MovieCard(movie)
             }
         }
@@ -133,6 +133,7 @@ private fun MovieCard(movie: Movie, modifier: Modifier = Modifier) {
                 .clip(RoundedCornerShape(corner = CornerSize(2.dp))),
             contentScale = ContentScale.Crop,
         )
+        Spacer(modifier = Modifier.height(2.dp))
         Text(
             text = movie.title,
             color = Gray900,
