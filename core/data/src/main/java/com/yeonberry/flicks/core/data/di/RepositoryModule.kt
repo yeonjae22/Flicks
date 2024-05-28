@@ -1,5 +1,7 @@
 package com.yeonberry.flicks.core.data.di
 
+import com.yeonberry.flicks.core.data.repository.FavoritesRepository
+import com.yeonberry.flicks.core.data.repository.FavoritesRepositoryImpl
 import com.yeonberry.flicks.core.data.repository.HomeRepository
 import com.yeonberry.flicks.core.data.repository.HomeRepositoryImpl
 import com.yeonberry.flicks.core.data.repository.SearchRepository
@@ -20,4 +22,8 @@ interface RepositoryModule {
     @Binds
     @Singleton
     fun bindHomeRepository(homeRepositoryImpl: HomeRepositoryImpl): HomeRepository
+
+    @Binds
+    @Singleton
+    fun bindFavoritesRepository(favoritesRepositoryImpl: FavoritesRepositoryImpl): FavoritesRepository
 }

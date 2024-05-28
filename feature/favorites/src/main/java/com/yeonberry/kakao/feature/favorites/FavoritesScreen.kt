@@ -39,6 +39,8 @@ fun FavoritesScreen(
     val favoritesState by viewModel.favoritesState.collectAsStateWithLifecycle()
     val itemList by viewModel.itemList.collectAsStateWithLifecycle()
 
+    viewModel.getFavorites()
+
     when (favoritesState) {
         FavoritesResultUiState.Loading -> {
 
