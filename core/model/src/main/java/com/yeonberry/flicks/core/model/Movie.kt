@@ -7,5 +7,6 @@ data class Movie(
     val posterPath: String,
     val genreIds: List<String>,
     val overview: String,
-    val voteAverage: String
+    val voteAverage: String,
+    val isFavorite: Boolean
 )

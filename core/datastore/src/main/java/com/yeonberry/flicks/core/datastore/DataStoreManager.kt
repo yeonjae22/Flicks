@@ -29,12 +29,21 @@ class DataStoreManager @Inject constructor(@ApplicationContext private val conte
             gson.fromJson(preferences[FAVORITES], typeToken)
         }
 
-    suspend fun updateFavorites(favorites: List<Movie>) {
-        context.dataStore.edit {
+    suspend fun updateFavorites(movie: Movie) {
+        context.dataStore.edit { preferences ->
             val gson = Gson()
-            val json = gson.toJson(favorites)
+            val json = gson.toJson(listOf(movie))
 
-            it[FAVORITES] = json
+            val typeToken = object : TypeToken<List<Movie>>() {}.type
+            val movies = gson.fromJson<List<Movie>>(preferences[FAVORITES], typeToken)
+
+            movies.add
+
+            if (preferences[FAVORITES].isNullOrEmpty()) {
+                preferences[FAVORITES] = json
+            } else {
+                preferences[FAVORITES] = preferences[FAVORITES] + json
+            }
         }
     }
 }

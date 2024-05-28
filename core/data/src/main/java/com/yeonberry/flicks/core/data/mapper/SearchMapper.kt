@@ -17,7 +17,8 @@ object SearchMapper {
                 posterPath = "https://image.tmdb.org/t/p/w342/" + it.posterPath,
                 genreIds = it.genreIds,
                 overview = it.overview,
-                voteAverage = it.voteAverage
+                voteAverage = it.voteAverage,
+                isFavorite = false
             )
         }
     )

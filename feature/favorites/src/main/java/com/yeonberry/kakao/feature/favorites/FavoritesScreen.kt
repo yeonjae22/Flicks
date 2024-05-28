@@ -112,7 +112,8 @@ fun FavoritesPreview() {
                 posterPath = "",
                 genreIds = emptyList(),
                 overview = "movie overview movie overview movie overview movie overview movie overview",
-                voteAverage = "9.8"
+                voteAverage = "9.8",
+                isFavorite = true
             ),
             Movie(
                 id = "1234",
@@ -121,7 +122,8 @@ fun FavoritesPreview() {
                 posterPath = "",
                 genreIds = emptyList(),
                 overview = "movie overview movie overview movie overview movie overview movie overview",
-                voteAverage = "9.8"
+                voteAverage = "9.8",
+                isFavorite = true
             ),
             Movie(
                 id = "1234",
@@ -130,7 +132,8 @@ fun FavoritesPreview() {
                 posterPath = "",
                 genreIds = emptyList(),
                 overview = "movie overview movie overview movie overview movie overview movie overview",
-                voteAverage = "9.8"
+                voteAverage = "9.8",
+                isFavorite = true
             ),
             Movie(
                 id = "1234",
@@ -139,7 +142,8 @@ fun FavoritesPreview() {
                 posterPath = "",
                 genreIds = emptyList(),
                 overview = "movie overview movie overview movie overview movie overview movie overview",
-                voteAverage = "9.8"
+                voteAverage = "9.8",
+                isFavorite = true
             )
         )
     )

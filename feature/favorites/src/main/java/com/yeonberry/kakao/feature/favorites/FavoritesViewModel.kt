@@ -31,14 +31,14 @@ class FavoritesViewModel @Inject constructor(
     fun getFavorites() {
         viewModelScope.launch {
             getFavoritesUseCase.invoke().collectLatest {
-                _itemList.emit(it)
+                _itemList.value = it
             }
         }
     }
 
-    fun updateFavorites(favorites: List<Movie>) {
+    fun updateFavorites(movie: Movie) {
         viewModelScope.launch {
-            updateFavoritesUseCase.invoke(favorites)
+            updateFavoritesUseCase.invoke(movie)
         }
     }
 }

@@ -2,6 +2,7 @@ package com.yeonberry.flicks.feature.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -18,6 +19,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,6 +40,7 @@ import coil.request.ImageRequest
 import com.yeonberry.flicks.core.designsystem.R.drawable
 import com.yeonberry.flicks.core.designsystem.ui.theme.Gray400
 import com.yeonberry.flicks.core.designsystem.ui.theme.Gray900
+import com.yeonberry.flicks.core.designsystem.ui.theme.Pink100
 import com.yeonberry.flicks.core.designsystem.ui.theme.Red500
 import com.yeonberry.flicks.core.designsystem.ui.theme.White
 import com.yeonberry.flicks.core.model.Movie
@@ -69,19 +72,28 @@ fun HomeScreen(
                 item {
                     MoviesSection(
                         title = stringResource(id = R.string.feature_home_trending_section_title),
-                        movies = trendingMovies
+                        movies = trendingMovies,
+                        onToggleFavorite = {
+                            viewModel.updateFavorites(it)
+                        }
                     )
                 }
                 item {
                     MoviesSection(
                         title = stringResource(id = R.string.feature_home_nowPlaying_section_title),
-                        movies = nowPlayingMovies
+                        movies = nowPlayingMovies,
+                        onToggleFavorite = {
+                            viewModel.updateFavorites(it)
+                        }
                     )
                 }
                 item {
                     MoviesSection(
                         title = stringResource(id = R.string.feature_home_popular_section_title),
-                        movies = popularMovies
+                        movies = popularMovies,
+                        onToggleFavorite = {
+                            viewModel.updateFavorites(it)
+                        }
                     )
                 }
             }
@@ -93,7 +105,8 @@ fun HomeScreen(
 private fun MoviesSection(
     modifier: Modifier = Modifier,
     title: String,
-    movies: List<Movie>
+    movies: List<Movie>,
+    onToggleFavorite: (Movie) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -111,28 +124,59 @@ private fun MoviesSection(
             contentPadding = PaddingValues(start = 16.dp, end = 16.dp)
         ) {
             items(movies) { movie ->
-                MovieCard(movie)
+                MovieCard(movie = movie, onToggleFavorite = onToggleFavorite)
             }
         }
     }
 }
 
 @Composable
-private fun MovieCard(movie: Movie, modifier: Modifier = Modifier) {
-    Column(modifier = Modifier.width(130.dp)) {
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(movie.posterPath)
-                .crossfade(true)
-                .build(),
-            contentDescription = null,
-            // placeholder = painterResource(R.drawable.placeholder),
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(186.dp)
-                .clip(RoundedCornerShape(corner = CornerSize(2.dp))),
-            contentScale = ContentScale.Crop,
-        )
+private fun MovieCard(
+    movie: Movie,
+    onToggleFavorite: (Movie) -> Unit,
+) {
+    Column(
+        modifier = Modifier
+            .width(130.dp)
+//            .clickable(onClick = { onClick(movie) })
+    ) {
+        Box {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(movie.posterPath)
+                    .crossfade(true)
+                    .build(),
+                contentDescription = null,
+                // placeholder = painterResource(R.drawable.placeholder),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(186.dp)
+                    .clip(RoundedCornerShape(corner = CornerSize(2.dp)))
+                    .align(Alignment.Center),
+                contentScale = ContentScale.Crop,
+            )
+
+//            val clickLabel = stringResource(
+//                if (movie.isFavorite) R.string.unbookmark else R.string.bookmark
+//            )
+            IconToggleButton(
+                checked = movie.isFavorite,
+                onCheckedChange = { onToggleFavorite(movie) },
+                modifier = Modifier
+//                    .semantics {
+//                        this.onClick(label = clickLabel, action = null)
+//                    }
+                    .align(Alignment.TopEnd)
+            ) {
+                Icon(
+                    painter = if (movie.isFavorite) painterResource(id = drawable.baseline_favorite_24) else painterResource(
+                        id = drawable.baseline_favorite_border_24
+                    ),
+                    contentDescription = null,
+                    tint = Pink100
+                )
+            }
+        }
         Spacer(modifier = Modifier.height(2.dp))
         Text(
             text = movie.title,
@@ -179,7 +223,8 @@ fun MoviesSectionPreview() {
                 posterPath = "",
                 genreIds = emptyList(),
                 overview = "movie overview movie overview movie overview movie overview movie overview",
-                voteAverage = "9.8"
+                voteAverage = "9.8",
+                isFavorite = false
             ),
             Movie(
                 id = "1234",
@@ -188,8 +233,10 @@ fun MoviesSectionPreview() {
                 posterPath = "",
                 genreIds = emptyList(),
                 overview = "movie overview movie overview movie overview movie overview movie overview",
-                voteAverage = "9.8"
+                voteAverage = "9.8",
+                isFavorite = true
             )
-        )
+        ),
+        onToggleFavorite = {}
     )
 }

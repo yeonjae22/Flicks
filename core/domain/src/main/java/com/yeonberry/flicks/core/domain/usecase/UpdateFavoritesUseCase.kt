@@ -8,5 +8,5 @@ class UpdateFavoritesUseCase @Inject constructor(
     private val repository: FavoritesRepository
 ) {
 
-    suspend operator fun invoke(favorites: List<Movie>) = repository.updateFavorites(favorites)
+    suspend operator fun invoke(movie: Movie) = repository.updateFavorites(movie)
 }

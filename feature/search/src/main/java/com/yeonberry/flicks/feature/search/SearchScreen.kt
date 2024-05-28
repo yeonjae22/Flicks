@@ -179,7 +179,8 @@ fun MovieCardPreview() {
             posterPath = "",
             genreIds = emptyList(),
             overview = "movie overview movie overview movie overview movie overview movie overview",
-            voteAverage = "9.8"
+            voteAverage = "9.8",
+            isFavorite = false
         )
     )
 }

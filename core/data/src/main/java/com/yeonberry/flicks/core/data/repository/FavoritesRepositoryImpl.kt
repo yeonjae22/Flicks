@@ -12,7 +12,7 @@ class FavoritesRepositoryImpl @Inject constructor(
         return dataStore.favorites
     }
 
-    override suspend fun updateFavorites(favorites: List<Movie>) {
-        return dataStore.updateFavorites(favorites)
+    override suspend fun updateFavorites(movie: Movie) {
+        return dataStore.updateFavorites(movie)
     }
 }
