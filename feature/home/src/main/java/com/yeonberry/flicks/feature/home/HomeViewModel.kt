@@ -6,15 +6,17 @@ import com.yeonberry.common.result.ApiResult
 import com.yeonberry.flicks.core.domain.usecase.GetNowPlayingMoviesUseCase
 import com.yeonberry.flicks.core.domain.usecase.GetPopularMoviesUseCase
 import com.yeonberry.flicks.core.domain.usecase.GetTrendingMoviesUseCase
-import com.yeonberry.flicks.core.domain.usecase.UpdateFavoritesUseCase
+import com.yeonberry.flicks.core.domain.usecase.UpdateFavoriteUseCase
 import com.yeonberry.flicks.core.model.Movie
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,7 +24,7 @@ class HomeViewModel @Inject constructor(
     private val getTrendingMoviesUseCase: GetTrendingMoviesUseCase,
     private val getNowPlayingMoviesUseCase: GetNowPlayingMoviesUseCase,
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
-    private val updateFavoritesUseCase: UpdateFavoritesUseCase
+    private val updateFavoriteUseCase: UpdateFavoriteUseCase
 ) : ViewModel() {
 
     private val _homeState: MutableStateFlow<HomeResultUiState> =
@@ -83,7 +85,9 @@ class HomeViewModel @Inject constructor(
 
     fun updateFavorites(movie: Movie) {
         viewModelScope.launch {
-            updateFavoritesUseCase.invoke(movie)
+            withContext(Dispatchers.IO) {
+                updateFavoriteUseCase.invoke(movie)
+            }
         }
     }
 }
