@@ -24,7 +24,10 @@ fun FlicksNavHost(
             HomeScreen(modifier = modifier)
         }
         composable(Screen.Search.route) {
-            SearchScreen(modifier = modifier)
+            SearchScreen(
+                modifier = modifier,
+                onBackClick = navController::popBackStack
+            )
         }
         composable(Screen.Favorites.route) {
             FavoritesScreen(modifier = modifier)

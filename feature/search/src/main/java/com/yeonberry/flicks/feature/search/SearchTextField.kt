@@ -55,7 +55,7 @@ fun SearchTextField(
         value = searchQuery,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(start = 8.dp, top = 16.dp, end = 16.dp, bottom = 16.dp)
             .focusRequester(focusRequester)
             .onKeyEvent {
                 if (it.key == Key.Enter) {
