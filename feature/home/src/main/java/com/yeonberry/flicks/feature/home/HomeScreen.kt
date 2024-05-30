@@ -155,17 +155,10 @@ private fun MovieCard(
                     .align(Alignment.Center),
                 contentScale = ContentScale.Crop,
             )
-
-//            val clickLabel = stringResource(
-//                if (movie.isFavorite) R.string.unbookmark else R.string.bookmark
-//            )
             IconToggleButton(
                 checked = movie.isFavorite,
                 onCheckedChange = { onToggleFavorite(movie) },
                 modifier = Modifier
-//                    .semantics {
-//                        this.onClick(label = clickLabel, action = null)
-//                    }
                     .align(Alignment.TopEnd)
             ) {
                 Icon(

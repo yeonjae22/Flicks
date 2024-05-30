@@ -37,7 +37,7 @@ class FavoritesViewModel @Inject constructor(
         }
     }
 
-    fun updateFavorite(movie: Movie) {
+    fun removeFavorite(movie: Movie) {
         viewModelScope.launch {
             updateFavoriteUseCase.invoke(movie)
         }
