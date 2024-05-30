@@ -3,10 +3,12 @@ package com.yeonberry.kakao.feature.favorites
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -21,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -58,16 +61,25 @@ fun FavoritesScreen(
 
 @Composable
 private fun Favorites(modifier: Modifier = Modifier, itemList: List<Movie>) {
-    LazyVerticalGrid(
-        modifier = modifier
-            .fillMaxSize()
-            .background(White),
-        columns = GridCells.Fixed(2),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        items(itemList) { movie ->
-            MovieCard(movie)
+    Column {
+        Text(
+            modifier = Modifier.padding(16.dp),
+            text = stringResource(id = R.string.feature_favorites),
+            color = Gray900,
+            style = MaterialTheme.typography.titleLarge
+        )
+        LazyVerticalGrid(
+            modifier = modifier
+                .fillMaxSize()
+                .background(White),
+            columns = GridCells.Fixed(2),
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            items(itemList) { movie ->
+                MovieCard(movie)
+            }
         }
     }
 }
