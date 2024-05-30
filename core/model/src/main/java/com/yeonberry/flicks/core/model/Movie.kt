@@ -8,5 +8,5 @@ data class Movie(
     val genreIds: List<String>,
     val overview: String,
     val voteAverage: String,
-    val isFavorite: Boolean
+    var isFavorite: Boolean
 )

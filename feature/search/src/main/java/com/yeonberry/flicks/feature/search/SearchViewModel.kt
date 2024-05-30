@@ -33,16 +33,8 @@ class SearchViewModel @Inject constructor(
             getSearchMoviesUseCase.invoke(query = query, page = page).collectLatest { apiResult ->
                 when (apiResult) {
                     is ApiResult.Success -> {
-                        _searchState.value = SearchResultUiState.Success(apiResult.value.results)
-                        _itemList.value = apiResult.value.results
-                    }
-
-                    is ApiResult.Error -> {
-                        apiResult.message?.let { Log.d("ApiResult.Error", it) }
-                    }
-
-                    is ApiResult.Exception -> {
-                        Log.d("ApiResult.Error", apiResult.exception.toString())
+                        _searchState.value = SearchResultUiState.Success(apiResult.data.results)
+                        _itemList.value = apiResult.data.results
                     }
 
                     else -> {

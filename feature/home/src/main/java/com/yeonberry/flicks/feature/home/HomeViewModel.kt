@@ -3,11 +3,15 @@ package com.yeonberry.flicks.feature.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yeonberry.common.result.ApiResult
+import com.yeonberry.flicks.core.domain.usecase.GetFavoritesUseCase
 import com.yeonberry.flicks.core.domain.usecase.GetNowPlayingMoviesUseCase
 import com.yeonberry.flicks.core.domain.usecase.GetPopularMoviesUseCase
 import com.yeonberry.flicks.core.domain.usecase.GetTrendingMoviesUseCase
 import com.yeonberry.flicks.core.domain.usecase.UpdateFavoriteUseCase
 import com.yeonberry.flicks.core.model.Movie
+import com.yeonberry.flicks.core.model.NowPlayingResult
+import com.yeonberry.flicks.core.model.PopularResult
+import com.yeonberry.flicks.core.model.TrendingResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,6 +28,7 @@ class HomeViewModel @Inject constructor(
     private val getTrendingMoviesUseCase: GetTrendingMoviesUseCase,
     private val getNowPlayingMoviesUseCase: GetNowPlayingMoviesUseCase,
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
+    private val getFavoritesUseCase: GetFavoritesUseCase,
     private val updateFavoriteUseCase: UpdateFavoriteUseCase
 ) : ViewModel() {
 
@@ -49,34 +54,40 @@ class HomeViewModel @Inject constructor(
             combine(
                 getTrendingMoviesUseCase.invoke(),
                 getNowPlayingMoviesUseCase.invoke(),
-                getPopularMoviesUseCase.invoke()
-            ) { trending, nowPlaying, popular ->
-                Triple(trending, nowPlaying, popular)
-            }.collectLatest { (trending, nowPlaying, popular) ->
-                when (trending) {
+                getPopularMoviesUseCase.invoke(),
+                getFavoritesUseCase.invoke(),
+            ) { trending, nowPlaying, popular, favorites ->
+                HomeContent(trending, nowPlaying, popular, favorites)
+            }.collectLatest { homeContent ->
+                when (homeContent.trending) {
                     is ApiResult.Success -> {
-                        _trendingMovies.value = trending.value.results
+                        val list = homeContent.trending.data.results.map {
+                            if (homeContent.favorites.contains(it)) {
+                                it.isFavorite = true
+                            }
+                            it
+                        }
+                        _trendingMovies.value = list
                     }
 
                     else -> {}
                 }
 
-                when (nowPlaying) {
+                when (homeContent.nowPlaying) {
                     is ApiResult.Success -> {
-                        _nowPlayingMovies.value = nowPlaying.value.results
+                        _nowPlayingMovies.value = homeContent.nowPlaying.data.results
                     }
 
                     else -> {}
                 }
 
-                when (popular) {
+                when (homeContent.popular) {
                     is ApiResult.Success -> {
-                        _popularMovies.value = popular.value.results
+                        _popularMovies.value = homeContent.popular.data.results
                     }
 
                     else -> {}
                 }
-
 
                 _homeState.value = HomeResultUiState.Success
             }
@@ -91,3 +102,10 @@ class HomeViewModel @Inject constructor(
         }
     }
 }
+
+data class HomeContent(
+    val trending: ApiResult<TrendingResult>,
+    val nowPlaying: ApiResult<NowPlayingResult>,
+    val popular: ApiResult<PopularResult>,
+    val favorites: List<Movie>
+)
