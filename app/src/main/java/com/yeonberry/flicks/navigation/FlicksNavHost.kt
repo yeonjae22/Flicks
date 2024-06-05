@@ -21,7 +21,12 @@ fun FlicksNavHost(
         startDestination = startDestination
     ) {
         composable(Screen.Home.route) {
-            HomeScreen(modifier = modifier)
+            HomeScreen(
+                modifier = modifier,
+                onSearchBarClick = {
+                    navController.navigate(Screen.Search.route)
+                }
+            )
         }
         composable(Screen.Search.route) {
             SearchScreen(
