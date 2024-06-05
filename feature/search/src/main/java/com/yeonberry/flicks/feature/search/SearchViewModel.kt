@@ -1,6 +1,5 @@
 package com.yeonberry.flicks.feature.search
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.yeonberry.common.result.ApiResult
@@ -33,7 +32,7 @@ class SearchViewModel @Inject constructor(
             getSearchMoviesUseCase.invoke(query = query, page = page).collectLatest { apiResult ->
                 when (apiResult) {
                     is ApiResult.Success -> {
-                        _searchState.value = SearchResultUiState.Success(apiResult.data.results)
+                        _searchState.value = SearchResultUiState.Success
                         _itemList.value = apiResult.data.results
                     }
 
